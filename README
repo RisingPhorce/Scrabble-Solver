@@ -1,0 +1,40 @@
+# ss
+
+This is a program for finding the maximum words with friends scores given a board and player tiles.  This is an extremely rough alpha version, it doesn't respect all the rules of play.
+
+Todo List:
+    When board is empty, only play on middle row or column ensure that middle spot is covered
+    Check for played word adjancency (right now results that aren't adjancent to a current play are still shown)
+    Attempt Verticle Plays as well as horizontal
+    Completely unoptimized, went for functionality first
+       Investigate why pmap didn't seem to improve performance profile
+       Investigate other performance options
+
+## Usage
+
+From REPL:  (load-file "./src/ss/scrabble_solver.clj")
+
+This will print the top 25 plays for an empty board with the tiles a, b, c, d, e, f and g.
+
+Initial state setup is ugly...edit scrabble_solver to populate the board and player tiles
+
+## Installation
+
+clone repository
+
+cd your/clone/dir
+lein deps
+
+to run from basic leiningen REPL:
+   lein repl
+   (load-file "./src/ss/scrabble_solver.clj")
+to run from your favorite tool/IDE:
+   lein swank
+   connect tool/IDE to swank
+   from in-tool REPL:    (load-file "./src/ss/scrabble_solver.clj")
+   
+## License
+
+Copyright (C) 2010 FIXME
+
+Distributed under the Eclipse Public License, the same as Clojure.
