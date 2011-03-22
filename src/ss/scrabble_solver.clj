@@ -4,6 +4,23 @@
 
 (def letter-vals {\a 1 \b 4 \c 4 \d 2 \e 1 \f 4 \g 3 \h 3 \i 1 \j 1 \k 1 \l 1 \m 1 \n 1 \o 1 \p 1 \q 1 \r 1 \s 1 \t 1 \u 1 \v 1 \w 1 \x 1 \y 1 \z 1 nil 0})
 
+(def played-ltr [(vec (.toCharArray "_______________"))
+		 (vec (.toCharArray "_______________"))
+		 (vec (.toCharArray "_______________"))
+		 (vec (.toCharArray "_______________"))
+		 (vec (.toCharArray "_______________"))
+		 (vec (.toCharArray "_______________"))
+		 (vec (.toCharArray "_______g_______"))
+		 (vec (.toCharArray "_______o_______"))
+		 (vec (.toCharArray "_______n_b_____"))
+		 (vec (.toCharArray "_____steel_____"))
+		 (vec (.toCharArray "_____e___a_____"))
+		 (vec (.toCharArray "___faxed_n_____"))
+		 (vec (.toCharArray "_________k_____"))
+		 (vec (.toCharArray "_________s_____"))
+		 (vec (.toCharArray "_______________"))])
+		 
+
 (def mult-table [[[1,1] [1,1] [1,1] [1,3] [1,1] [1,1] [3,1] [1,1] [3,1] [1,1] [1,1] [1,3] [1,1] [1,1] [1,1]]
 		 [[1,1] [1,1] [2,1] [1,1] [1,1] [1,2] [1,1] [1,1] [1,1] [1,2] [1,1] [1,1] [2,1] [1,1] [1,1]]
 		 [[1,1] [2,1] [1,1] [1,1] [2,1] [1,1] [1,1] [1,1] [1,1] [1,1] [2,1] [1,1] [1,1] [2,1] [1,1]]
@@ -23,11 +40,15 @@
 (defn make-sq-board [dim]
   (vec (for [x (range dim)]
     (vec (for [y (range dim)]
-      [nil (((mult-table x) y) 0) (((mult-table x) y) 1)])))))
+	   (let [letter ((played-ltr x) y)
+		 actual-ltr (if (= letter \_) nil letter)
+		 letter-mult (((mult-table x) y) 0)
+		 word-mult (((mult-table x) y) 1)]
+		 [actual-ltr letter-mult word-mult]))))))
 
 (def board-dim 15)
 (def board (make-sq-board board-dim))
-(def my-tiles [\a \b \c \d \e \f \g])
+(def my-tiles [\z \o \u \a \a \i \h])
 (def all-plays (mapcat permutations (mapcat #(combinations my-tiles %1) (range 1 (inc (count my-tiles))))))
 
 (defn valid-word [word]
